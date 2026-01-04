@@ -1,10 +1,15 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class StudentService {
 
     private ArrayList<Student> students = new ArrayList<>();
     private Scanner sc = new Scanner(System.in);
+
+    public int getStudentCount() {
+        return students.size();
+    }
 
     public void addStudent() {
         System.out.print("Enter ID: ");
@@ -27,10 +32,11 @@ public class StudentService {
 
     public void viewStudents() {
         if (students.isEmpty()) {
-            System.out.println("❌ No students found.");
+            System.out.println("⚠️ No students available.");
             return;
         }
 
+        System.out.println("\n----- Student List -----");
         for (Student s : students) {
             System.out.println(s);
         }
@@ -64,9 +70,11 @@ public class StudentService {
         System.out.print("Enter Student ID to Delete: ");
         int id = sc.nextInt();
 
-        for (Student s : students) {
+        Iterator<Student> itr = students.iterator();
+        while (itr.hasNext()) {
+            Student s = itr.next();
             if (s.getId() == id) {
-                students.remove(s);
+                itr.remove();
                 System.out.println("✅ Student Deleted Successfully!");
                 return;
             }
